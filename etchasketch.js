@@ -1,13 +1,19 @@
-let gridSize = 16;
+let gridSize;
 const gridContainer = document.querySelector('#grid-container');
+
+do{
+  gridSize = prompt('initialize grid')
+} while(gridSize < 12 || gridSize > 100)
+
+let mouseDown = false
+document.body.onmousedown = () => (mouseDown = true)
+document.body.onmouseup = () => (mouseDown = false)
 
 initiateGrid();
 const gridItems = document.querySelectorAll('#grid-container > div');
 console.log(gridItems);
 gridItems.forEach((item) => {
-  item.addEventListener('click', () => {
-    item.classList.add('filled');
-  })
+  item.addEventListener('mouseover', changeColor);
 })
 
 function initiateGrid(){
@@ -17,4 +23,9 @@ function initiateGrid(){
       gridContainer.appendChild(document.createElement('div'));
     }
   }
+}
+
+function changeColor(e) {
+  if (!mouseDown) return
+  e.target.classList.add('filled');
 }
